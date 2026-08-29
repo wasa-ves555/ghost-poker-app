@@ -288,6 +288,9 @@ button {
   border-top: 1px dashed var(--border);
   overflow: hidden;
   z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ad-slot__fallback {
@@ -306,6 +309,13 @@ button {
 .ad-slot ins.adsbygoogle {
   position: relative;
   z-index: 1;
+}
+
+/* Google marks an unfilled request this way instead of removing the
+   element — hide it so the dark fallback shows instead of a blank
+   white iframe. */
+.ad-slot ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
 }
 
 .doc-card {

@@ -1187,6 +1187,14 @@ function TallyTable(props: { state: GameState }) {
 // data-adtest before going live. The adsbygoogle script can't load inside
 // the sandboxed Artifact preview, so the fallback label stays visible
 // there; on a self-hosted page a filled ad renders on top of it.
+//
+// This is a FIXED-size unit (320x50, the standard mobile banner) rather
+// than a "responsive"/"auto" one on purpose: responsive units tell
+// AdSense to resize the ad's container to fit whatever creative it
+// serves, which fights the reserved-height bottom bar this app wants.
+// When a request goes unfilled, AdSense marks the <ins> data-ad-status
+// "unfilled" instead of removing it — the CSS for .ad-slot hides it in
+// that state so the dark fallback shows instead of a blank white iframe.
 function AdBanner() {
   useEffect(() => {
     try {
@@ -1201,11 +1209,9 @@ function AdBanner() {
       <div className="ad-slot__fallback">Ad</div>
       <ins
         className="adsbygoogle"
-        style={{ display: "block", width: "100%", height: "100%" }}
+        style={{ display: "inline-block", width: "320px", height: "50px" }}
         data-ad-client="ca-pub-0000000000000000"
         data-ad-slot="0000000000"
-        data-ad-format="horizontal"
-        data-full-width-responsive="true"
         data-adtest="on"
       />
     </div>
